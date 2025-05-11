@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
       if (error.response.status === 404) {
         toast.error(error.message);
       } else {
-        toast.error(error.response.data.message);
+        toast.error(error.response.data.error);
       }
     } else if (error.request) {
       // Timeout or other network errors

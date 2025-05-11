@@ -35,7 +35,7 @@ export default function UserDelete({ user, onSuccess }: UserDeleteProps) {
       setIsOpen(false);
       await onSuccess();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to delete user");
+      console.log("🚀 ~ handleDeleteUser ~ err:", err);
     } finally {
       setLoading(false);
     }

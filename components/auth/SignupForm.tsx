@@ -30,7 +30,7 @@ export interface SignupFormData {
 
 function SignupForm() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { dispatch } = useAuth();
 
   const [isSigningUp, setIsSigningUp] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -58,7 +58,7 @@ function SignupForm() {
 
     try {
       const user = await signupAPI(data);
-      login(user);
+      dispatch({ type: "LOGIN", payload: user });
 
       toast.success("Account created successfully!");
 
@@ -66,7 +66,7 @@ function SignupForm() {
 
       router.push("/");
     } catch (err) {
-      toast.error((err as Error).message || "Failed to sign up");
+      console.log("🚀 ~ SignupForm ~ err:", err);
     } finally {
       setIsSigningUp(false);
     }

@@ -55,9 +55,7 @@ export default function UserBulkDelete({ onSuccess }: UserBulkDeleteProps) {
       setIsOpen(false);
       await onSuccess();
     } catch (err) {
-      toast.error(
-        err instanceof Error ? err.message : "Failed to delete users"
-      );
+      console.log("🚀 ~ UserBulkDelete ~ err:", err);
     } finally {
       setLoading(false);
     }

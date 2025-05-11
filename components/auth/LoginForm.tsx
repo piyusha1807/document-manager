@@ -25,7 +25,8 @@ import { loginAPI } from "@/lib/services/authService";
 
 function LoginForm() {
   const router = useRouter();
-  const { isAuthenticated, login } = useAuth();
+  const { state, dispatch } = useAuth();
+  const { isAuthenticated } = state;
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -64,7 +65,7 @@ function LoginForm() {
 
     try {
       const user = await loginAPI(email, password);
-      login(user); // sets context
+      dispatch({ type: "LOGIN", payload: user });
 
       // Announce success to screen readers
       toast.success("Login successful", {
@@ -75,10 +76,7 @@ function LoginForm() {
 
       router.push("/");
     } catch (err) {
-      const errorMessage = (err as Error).message || "Failed to log in";
-      toast.error(errorMessage, {
-        id: "login-error",
-      });
+      console.log("🚀 ~ LoginForm ~ err:", err);
     } finally {
       setIsLoggingIn(false);
     }

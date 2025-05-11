@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function DocumentManagementPage() {
   return (
-    <main>
+    <main className="container mx-auto py-6 space-y-6">
       <TableWrapper />
     </main>
   );

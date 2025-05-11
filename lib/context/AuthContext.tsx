@@ -3,7 +3,7 @@
 import {
   createContext,
   useContext,
-  useState,
+  useReducer,
   useEffect,
   ReactNode,
 } from "react";
@@ -19,51 +19,73 @@ export interface User {
   role: UserRole;
 }
 
-// Auth context interface
-interface AuthContextType {
+// Define the state shape
+interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  login: (user: User) => Promise<void>;
-  logout: () => Promise<void>;
+}
+
+// Define action types
+export type AuthAction = { type: "LOGIN"; payload: User } | { type: "LOGOUT" };
+
+// Initial state
+const initialState: AuthState = {
+  user: null,
+  isAuthenticated: false,
+};
+
+// Reducer function
+function authReducer(state: AuthState, action: AuthAction): AuthState {
+  switch (action.type) {
+    case "LOGIN":
+      // Save user to localStorage when logging in
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      return {
+        user: action.payload,
+        isAuthenticated: true,
+      };
+    case "LOGOUT":
+      // Remove user from localStorage when logging out
+      localStorage.removeItem("user");
+      return {
+        user: null,
+        isAuthenticated: false,
+      };
+    default:
+      return state;
+  }
+}
+
+// Auth context interface
+interface AuthContextType {
+  state: AuthState;
+  dispatch: React.Dispatch<AuthAction>;
 }
 
 // Create context with default values
 const AuthContext = createContext<AuthContextType>({
-  user: null,
-  isAuthenticated: false,
-  login: async () => {},
-  logout: async () => {},
+  state: initialState,
+  dispatch: () => {},
 });
 
 // Auth provider component
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
     // Check for stored user in localStorage on initial load
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      dispatch({ type: "LOGIN", payload: JSON.parse(storedUser) });
     }
   }, []);
 
-  const login = async (user: User) => {
-    try {
-      setUser(user);
-      localStorage.setItem("user", JSON.stringify(user));
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  };
-
-  const logout = async () => {
-    setUser(null);
-    localStorage.removeItem("user");
-  };
-
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, login, logout }}
+      value={{
+        state,
+        dispatch,
+      }}
     >
       {children}
     </AuthContext.Provider>

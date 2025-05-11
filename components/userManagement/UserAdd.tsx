@@ -84,7 +84,7 @@ export default function UserAdd({ onSuccess }: UserAddProps) {
       form.reset();
       await onSuccess();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to add user");
+      console.log("🚀 ~ UserAdd ~ err:", err);
     } finally {
       setLoading(false);
     }

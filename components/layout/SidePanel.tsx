@@ -17,13 +17,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { toast } from "sonner";
 
 export function SidePanel() {
-  const { user, logout } = useAuth();
+  const { state, dispatch } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
-      await logout();
+      dispatch({ type: "LOGOUT" });
       toast.success("Logged out successfully");
       router.push("/login");
     } catch (error) {
@@ -104,7 +104,7 @@ export function SidePanel() {
         <div>
           <SidebarLink
             link={{
-              label: user?.name || "User",
+              label: state.user?.name || "User",
               href: "#",
               icon: (
                 <Avatar>
@@ -113,7 +113,7 @@ export function SidePanel() {
                     alt="User avatar"
                   />
                   <AvatarFallback>
-                    {user?.name?.charAt(0).toUpperCase() || "U"}
+                    {state.user?.name?.charAt(0).toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
               ),

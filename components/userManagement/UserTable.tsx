@@ -20,7 +20,6 @@ import UserDelete from "./UserDelete";
 import UserBulkDelete from "./UserBulkDelete";
 import UserPagination from "./UserPagination";
 import { getUsersAPI } from "@/lib/services/userService";
-import { toast } from "sonner";
 
 export default function UserTable() {
   // Get context values
@@ -72,7 +71,7 @@ export default function UserTable() {
       dispatch({ type: "SET_USERS", payload: response.data });
       dispatch({ type: "SET_PAGINATION", payload: response.pagination });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to load users");
+      console.log("🚀 ~ fetchUsers ~ err:", err);
     } finally {
       setLoading(false);
     }

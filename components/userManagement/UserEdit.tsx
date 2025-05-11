@@ -95,7 +95,7 @@ export default function UserEdit({ user, onSuccess }: UserEditProps) {
       setIsOpen(false);
       await onSuccess();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to update user");
+      console.log("🚀 ~ UserEdit ~ err:", err);
     } finally {
       setLoading(false);
     }
