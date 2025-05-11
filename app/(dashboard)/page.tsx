@@ -1,20 +1,10 @@
 "use client";
 
 import { useAuth } from "@/lib/context/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function DashboardPage() {
-  const { isAuthenticated, user } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace("/login");
-    }
-  }, [isAuthenticated]);
-
-  if (!isAuthenticated) return null;
+  const { state } = useAuth();
+  const { user } = state;
 
   return (
     <main className="space-y-6 ">
