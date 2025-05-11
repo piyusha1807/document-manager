@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AppProvider } from "@/lib/context/AppProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Document Manager",
-  description: "Document Manager",
+  title: {
+    template: "%s | Document Manager",
+    default: "Document Manager",
+  },
+  description: "Document Management Application",
 };
 
 export default function RootLayout({
@@ -27,7 +32,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AppProvider>{children}</AppProvider>
+        <Toaster richColors />
       </body>
     </html>
   );
