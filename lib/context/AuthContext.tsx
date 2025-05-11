@@ -22,6 +22,7 @@ export interface User {
 // Auth context interface
 interface AuthContextType {
   user: User | null;
+  isAuthenticated: boolean;
   login: (user: User) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -29,6 +30,7 @@ interface AuthContextType {
 // Create context with default values
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  isAuthenticated: false,
   login: async () => {},
   logout: async () => {},
 });
@@ -60,7 +62,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated: !!user, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

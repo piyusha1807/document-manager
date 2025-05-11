@@ -25,7 +25,7 @@ import { loginAPI } from "@/lib/services/authService";
 
 function LoginForm() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { isAuthenticated, login } = useAuth();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -46,6 +46,12 @@ function LoginForm() {
       firstInput.focus();
     }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/"); // already logged in
+    }
+  }, [isAuthenticated]);
 
   const onSubmit = async ({
     email,
