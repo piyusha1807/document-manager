@@ -10,7 +10,6 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-  DrawerFooter,
 } from "@/components/ui/drawer";
 import { Document } from "@/lib/types/document";
 import { getDocumentByIdAPI } from "@/lib/services/documentService";
