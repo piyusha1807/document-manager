@@ -10,6 +10,7 @@ interface Links {
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;
+  key?: string;
 }
 
 interface SidebarContextProps {
@@ -158,11 +159,13 @@ export const SidebarLink = ({
   link,
   className,
   isActive,
+  disabled = false,
   ...props
 }: {
   link: Links;
   className?: string;
   isActive: boolean;
+  disabled?: boolean;
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
@@ -175,6 +178,7 @@ export const SidebarLink = ({
         isActive
           ? "text-primary font-medium bg-neutral-200/50 dark:bg-neutral-700/50 rounded px-2"
           : "",
+        disabled ? "opacity-50 cursor-not-allowed" : "",
         className
       )}
       {...props}
