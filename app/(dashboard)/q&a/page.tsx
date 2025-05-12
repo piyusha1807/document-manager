@@ -1,4 +1,3 @@
-import DocumentTable from "@/components/documentManagement/DocumentTable";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
