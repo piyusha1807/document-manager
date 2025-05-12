@@ -1,4 +1,4 @@
-import TableWrapper from "@/components/common/TableWrapper";
+import DocumentTable from "@/components/documentManagement/DocumentTable";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function DocumentManagementPage() {
   return (
     <main className="container mx-auto py-6 space-y-6">
-      <TableWrapper />
+      <DocumentTable />
     </main>
   );
 }

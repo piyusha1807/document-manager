@@ -3,6 +3,8 @@
 import { ReactNode } from "react";
 import { AuthProvider } from "./AuthContext";
 import { UserProvider } from "./UserContext";
+import { DocumentProvider } from "./DocumentContext";
+
 interface AppProviderProps {
   children: ReactNode;
 }
@@ -10,7 +12,9 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <AuthProvider>
-      <UserProvider>{children}</UserProvider>
+      <UserProvider>
+        <DocumentProvider>{children}</DocumentProvider>
+      </UserProvider>
     </AuthProvider>
   );
 }

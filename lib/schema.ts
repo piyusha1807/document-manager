@@ -43,3 +43,30 @@ export const bulkUserIdsSchema = z.object({
 });
 
 export const updateUserSchema = userSchema.partial().merge(userIdSchema);
+
+// Document schemas
+export const documentSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Document name is required")
+    .max(255, "Document name cannot exceed 255 characters")
+    .trim()
+    .refine((value) => value.length > 0, { message: "Document name cannot be empty or just whitespace" }),
+  type: z.string().min(1, "Document type is required"),
+  size: z.number().min(0, "Document size must be a positive number"),
+  uploadedBy: z.object({
+    id: z.string().min(1, "User ID is required"),
+    name: z.string().min(1, "User name is required"),
+    email: z.string().email("Please enter a valid email address"),
+  }),
+});
+
+export const documentIdSchema = z.object({
+  id: z.string().min(1, "Document ID is required"),
+});
+
+export const bulkDocumentIdsSchema = z.object({
+  ids: z.array(z.string().min(1, "Document ID is required")),
+});
+
+export const updateDocumentSchema = documentSchema.partial().merge(documentIdSchema);
