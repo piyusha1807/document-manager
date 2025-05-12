@@ -10,7 +10,7 @@ import {
   File,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useAuth } from "@/lib/context/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -19,6 +19,7 @@ import { toast } from "sonner";
 export function SidePanel() {
   const { state, dispatch } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -78,6 +79,11 @@ export function SidePanel() {
     },
   ];
 
+  // Function to check if a link is active
+  const isLinkActive = (href: string) => {
+    return pathname === href || (href !== "/" && pathname.startsWith(href));
+  };
+
   return (
     <Sidebar open={open} setOpen={setOpen}>
       <SidebarBody className="justify-between gap-10">
@@ -92,12 +98,21 @@ export function SidePanel() {
                     className="cursor-pointer"
                     onClick={link.onClick}
                   >
-                    <SidebarLink link={link} />
+                    <SidebarLink
+                      link={link}
+                      isActive={isLinkActive(link.href)}
+                    />
                   </div>
                 );
               }
 
-              return <SidebarLink key={idx} link={link} />;
+              return (
+                <SidebarLink
+                  key={idx}
+                  link={link}
+                  isActive={isLinkActive(link.href)}
+                />
+              );
             })}
           </div>
         </div>
@@ -118,6 +133,7 @@ export function SidePanel() {
                 </Avatar>
               ),
             }}
+            isActive={false}
           />
         </div>
       </SidebarBody>

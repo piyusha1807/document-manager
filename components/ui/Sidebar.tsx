@@ -5,7 +5,6 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { usePathname } from "next/navigation";
 
 interface Links {
   label: string;
@@ -158,19 +157,15 @@ export const MobileSidebar = ({
 export const SidebarLink = ({
   link,
   className,
+  isActive,
   ...props
 }: {
   link: Links;
   className?: string;
+  isActive: boolean;
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
-  const pathname = usePathname();
-
-  // Check if current link matches the current path
-  const isActive =
-    pathname === link.href ||
-    (link.href !== "/" && pathname.startsWith(link.href));
 
   return (
     <Link
