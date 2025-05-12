@@ -15,6 +15,7 @@ A comprehensive web application for managing users, documents, and providing a Q
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
 - **State Management**: React Context API
 - **UI Components**: Custom components with Tailwind CSS
+- **Testing**: Jest, React Testing Library, MSW
 
 ## Getting Started
 
@@ -47,10 +48,19 @@ npm run dev
 
 ## Testing
 
+This project uses Jest and React Testing Library for testing. Please see the [TESTING.md](TESTING.md) file for detailed information about our testing strategy and guidelines.
+
 Run the test suite:
 
 ```bash
+# Run all tests
 npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
 ```
 
 ## License
