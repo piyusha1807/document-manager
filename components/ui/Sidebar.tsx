@@ -5,6 +5,7 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 interface Links {
   label: string;
@@ -164,22 +165,43 @@ export const SidebarLink = ({
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
+  const pathname = usePathname();
+
+  // Check if current link matches the current path
+  const isActive =
+    pathname === link.href ||
+    (link.href !== "/" && pathname.startsWith(link.href));
+
   return (
     <Link
       href={link.href}
       className={cn(
         "flex items-center justify-start gap-2 group/sidebar py-2",
+        isActive
+          ? "text-primary font-medium bg-neutral-200/50 dark:bg-neutral-700/50 rounded px-2"
+          : "",
         className
       )}
       {...props}
     >
-      {link.icon}
+      <div
+        className={cn(
+          isActive ? "text-primary" : "text-neutral-600 dark:text-neutral-400"
+        )}
+      >
+        {link.icon}
+      </div>
       <motion.span
         animate={{
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className={cn(
+          "text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0",
+          isActive
+            ? "text-primary font-medium"
+            : "text-neutral-700 dark:text-neutral-200"
+        )}
       >
         {link.label}
       </motion.span>
