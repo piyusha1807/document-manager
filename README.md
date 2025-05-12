@@ -10,6 +10,11 @@ A comprehensive web application for managing users, documents, and providing a Q
 - **Ingestion Management**: Monitor and control document ingestion processes (In progress)
 - **Q&A Interface**: Ask questions and get answers based on document content (In progress)
 
+## Completed Assignments
+
+- **Accessibility**: Implemented accessibility features throughout the application to ensure inclusive user experience
+- **Lighthouse Score Optimization**: Improved application performance, accessibility, best practices, and SEO as measured by Lighthouse
+
 ## Tech Stack
 
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
